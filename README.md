@@ -42,7 +42,6 @@ Tools:
 
 ⚙️ Installation
 1. Clone the Repository
-git clone https://github.com/your-username/pylearn.git
 cd pylearn
 
 2. Install Dependencies
@@ -76,7 +75,6 @@ Automate API testing through Python scripts
 
 👩‍💻 Author
 
-Isha Kaur
+Bisman Kaur
 Python Developer | Tech Enthusiast
-Isha Kaur
-Python Developer | Tech Enthusiast
+
