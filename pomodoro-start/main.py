@@ -71,12 +71,12 @@ def count_down(count):
 
 window = Tk()
 window.title("pomodoro")
-window.config(padx=100, pady=50, bg=YELLOW)
+window.config(padx=100, pady=50, bg=PINK)
 # to have a window
 # if i have a windo then a thin line will appear creating seperation between window and canvas so to remove that -->
 # highlightthickness=0
 
-canvas = Canvas(width=200, height=250, bg=YELLOW, highlightthickness=0)
+canvas = Canvas(width=200, height=250, bg=YELLOW)
 
 label_timer = Label(text="Timer", font=(FONT_NAME, 35, "bold"), bg=YELLOW, fg=GREEN)
 label_timer.grid(column=1, row=0)

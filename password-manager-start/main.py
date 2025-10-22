@@ -1,3 +1,4 @@
+import json
 from tkinter import *
 from tkinter import messagebox
 from random import randint, choice, shuffle
@@ -29,13 +30,41 @@ def generate_password():
     pyperclip.copy(password)
     # print(f"Your password is: {password}")
 
+def search():
+    # Used exception Handleing
+    website = entry_website.get()
+    try:
+        with open("password.json", "r") as file:
+            data = json.load(file)
+
+    except:
+        messagebox.showinfo(title="Error", message="No data file found")
+
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title=website,message=f"Email: {email}\n Password: {password} ")
+
+        else:
+            messagebox.showinfo(title="Error",message="no details found")
+
+
+
+    # messagebox.showinfo(title=entry_website, message=)
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save():
     email = entry_email.get()
     password = entry.get()
     website = entry_website.get()
-
+    new_data = {
+        website: {
+            "email": email,
+            "password": password,
+        }
+    }
+    # USED MESSAGEBOX
     if len(website) == 0 or len(password) == 0:
         messagebox.showerror(title="OOPS", message=" The details are incompelete")
     else:
@@ -43,8 +72,20 @@ def save():
                                        message=f"These are the details entered:\n Email:{email} \n Password:{password}\n"
                                                f"Is it ok to save?")
         if is_ok:
-            with open("password.txt", "a") as file:
-                file.write(f"{email} | {password} | {website}\n")
+            try:
+                with open("password.json", "r") as file:
+                    data = json.load(file)
+
+            except:
+                with open("password.json", "w") as file:
+                    json.dump(new_data, file, indent=4)
+
+            else:
+                data.update(new_data)
+                with open("password.json", "w") as file:
+                    json.dump(data, file, indent=4)
+
+            finally:
                 # making the data clear form the window to add another
                 entry_website.delete(0, END)
                 entry.delete(0, END)
@@ -76,6 +117,9 @@ entry_email.grid(column=1, row=2, columnspan=3, sticky="ew")
 entry_email.insert(0, "angela@gmail.com")
 entry = Entry(width=21)
 entry.grid(column=1, row=3, columnspan=1, sticky="ew")
+
+button = Button(text="Search", command=search)
+button.grid(column=3, row=1)
 
 button = Button(text="Generate Password", command=generate_password)
 button.grid(column=3, row=3)
